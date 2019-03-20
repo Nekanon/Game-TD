@@ -1,31 +1,45 @@
 package data;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 
-//input class
+import helpers.Clock;
+
+import static helpers.Artist.*;
+
 public class Boot {
-	
 	public Boot() {
-		Display.setTitle("GG Game");
-		try {
-			Display.setDisplayMode(new DisplayMode(600, 400));
-			Display.create();
-		} catch(LWJGLException e) {
-			e.printStackTrace();
-		}
+		
+		BeginSession();
+	
+		int[][] map = {
+				{0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, 
+				{0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, 
+				{0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, 
+				{0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, 
+				{0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, 
+				{0, 1, 0, 1, 1, 1, 0, 0, 1, 0}, 
+				{0, 1, 0, 1, 0, 1, 0, 0, 1, 0}, 
+				{0, 1, 0, 1, 0, 1, 0, 0, 1, 0}, 
+				{0, 1, 0, 1, 0, 1, 1, 1, 1, 0}, 
+				{0, 1, 1, 1, 0, 0, 0, 0, 0, 0}
+		};
+		
+		Game game = new Game(map);
 		
 		while(!Display.isCloseRequested()) {
+			Clock.update();
+			
+			game.update();
+			
 			Display.update();
 			Display.sync(120);
 		}
 		
 		Display.destroy();
+		
 	}
 	
 	public static void  main(String[] args) {
 		new Boot();
 	}
-	
 }
